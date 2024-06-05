@@ -11,12 +11,21 @@ declare -a packages=(
 	i3
 	alacritty
 	zsh
-	nvim
+	neovim
+	python3
+	openjdk-17-jdk
+	gradle
+	fzf
 )
 
 for package in "${packages[@]}"; do
 	echo "Installing ${package}"
 	sudo apt install "${package}"
+
+	if [ $package -eq "zsh" ] then
+		echo "Setting ZSH as Default Terminal"
+		chsh -$(uname -r)
+	fi
 done
 
 # Install Brave
