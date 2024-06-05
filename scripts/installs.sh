@@ -2,20 +2,25 @@
 
 # APT Packages
 declare -a packages=(
+	stow
+	tar
+	gcc
+	make
+	bzip2
+	curl
 	i3
 	alacritty
 	zsh
 	nvim
 )
 
-# APT Packages
 for package in "${packages[@]}"; do
 	echo "Installing ${package}"
 	sudo apt install "${package}"
 done
 
 # Install Brave
-echo "Installing Brave Browser"
+sudo apt install curl
 
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 
@@ -24,5 +29,3 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] http
 sudo apt update
 
 sudo apt install brave-browser
-
-# Install IntelliJ Idea
