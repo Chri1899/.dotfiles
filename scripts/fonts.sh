@@ -24,3 +24,5 @@ for font in "${fonts[@]}"; do
 	echo "Removing tarball"
 	rm "$tar_file"
 done
+
+sudo apt install fonts-font-awesome
