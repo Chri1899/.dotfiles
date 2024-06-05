@@ -1,0 +1,4 @@
+alias ls="ls --color"
+alias nvim="nvim"
+alias brave="brave &"
+alias cls="clear"
