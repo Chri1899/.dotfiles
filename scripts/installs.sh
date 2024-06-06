@@ -22,9 +22,10 @@ for package in "${packages[@]}"; do
 	echo "Installing ${package}"
 	sudo apt install "${package}"
 
-	if [ $package -eq "zsh" ] then
+	if [ $package == "zsh" ]
+	then
 		echo "Setting ZSH as Default Terminal"
-		chsh -$(uname -r)
+		chsh -s $(which zsh)
 	fi
 done
 

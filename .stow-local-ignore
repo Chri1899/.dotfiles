@@ -1,4 +1,7 @@
-.git
+\.git
+\.gitignore
+
 scripts
-notes
-.stow-local-ignore
+
+^/README.*
+^/LICENSE.*
