@@ -8,3 +8,7 @@ family = "JetBrainsMono Nerd Font"
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
+
+[window]
+opacity = 0.7
+decorations = "None"

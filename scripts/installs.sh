@@ -17,6 +17,7 @@ declare -a packages=(
 	gradle
 	fzf
 	feh
+	picom
 )
 
 for package in "${packages[@]}"; do

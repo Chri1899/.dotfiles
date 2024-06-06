@@ -191,3 +191,6 @@ bar {
 
 # Change Background via "feh"
 exec_always --no-startup-id feh --bg-scale $HOME/stuff/images/background.jpg
+
+# Start picom for transparency
+exec --no-startup-id picom -b
