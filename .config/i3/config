@@ -188,3 +188,6 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
 }
+
+# Change Background via "feh"
+exec_always --no-startup-id feh --bg-scale $HOME/stuff/images/background.jpg

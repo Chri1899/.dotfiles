@@ -16,6 +16,7 @@ declare -a packages=(
 	openjdk-17-jdk
 	gradle
 	fzf
+	feh
 )
 
 for package in "${packages[@]}"; do
