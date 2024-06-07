@@ -201,9 +201,11 @@ client.placeholder		#000000	#0c0c0c	#ffffff	#000000	#0c0c0c
 client.background		#ffffff
 
 # Autostart applications on specific workspaces
-exec --no-startup-id i3-msg 'workspace 1:Main; exec alacritty --title=main; workspace1'
+exec --no-startup-id i3-msg 'workspace 2; exec alacritty --title=main;'
+exec --no-startup-id i3-msg 'workspace 1; exec alacritty --title=second;'
 
-assign [class="^Alacritty$" instance="main"] $ws1
+assign [class="^Alacritty$"] $ws1
+assign [class="^Alacritty$"] $ws2
 
 # Change Background via "feh"
 exec_always --no-startup-id feh --bg-scale $HOME/stuff/images/background.jpg
