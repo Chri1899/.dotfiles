@@ -4,6 +4,7 @@ declare -a fonts=(
 	InconsolataGo
 	FiraMono
 	JetBrainsMono
+	Hack
 )
 
 fonts_dir="${HOME}/.local/share/fonts"

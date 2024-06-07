@@ -1,4 +1,4 @@
 alias ls="ls --color"
 alias nvim="nvim"
-alias brave="brave &"
+alias brave="brave-browser &"
 alias cls="clear"

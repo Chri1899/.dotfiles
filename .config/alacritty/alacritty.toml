@@ -1,3 +1,10 @@
+[font]
+size = 12.0
+
+[window]
+opacity = 0.7
+decorations = "None"
+
 [font.bold]
 family = "JetBrainsMono Nerd Font"
 style = "Bold"
@@ -8,7 +15,3 @@ family = "JetBrainsMono Nerd Font"
 [font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
-
-[window]
-opacity = 0.7
-decorations = "None"

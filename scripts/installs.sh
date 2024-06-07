@@ -18,6 +18,7 @@ declare -a packages=(
 	fzf
 	feh
 	picom
+	polybar
 )
 
 for package in "${packages[@]}"; do
