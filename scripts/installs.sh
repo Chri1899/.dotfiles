@@ -11,6 +11,8 @@ declare -a packages=(
 	i3
 	alacritty
 	zsh
+    nodejs
+    npm
 	neovim
 	python3
 	openjdk-17-jdk
