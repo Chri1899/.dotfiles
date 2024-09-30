@@ -15,6 +15,7 @@ declare -a packages=(
 	python3
 	openjdk-17-jdk
 	gradle
+    maven
 	fzf
 	feh
 	picom
