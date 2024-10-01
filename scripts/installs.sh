@@ -45,3 +45,10 @@ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] http
 sudo apt update
 
 sudo apt install brave-browser
+
+# Install Emacs
+sudo apt-add-repository universe
+
+sudo apt update
+
+sudo apt install emacs-gtk
