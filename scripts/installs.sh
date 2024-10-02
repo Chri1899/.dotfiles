@@ -7,7 +7,7 @@ declare -a packages=(
 	gcc
 	make
     cmake
-    libtools
+    libtool-bin
 	bzip2
 	curl
 	i3
