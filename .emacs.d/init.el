@@ -64,6 +64,11 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-dracula t))
 
+;; -- Load Icons --
+(use-package all-the-icons
+  :demand t
+  :if (display-graphic-p))
+
 ;; -- Config Fonts --
 (set-face-attribute 'default nil
 		    :font "JetBrainsMono Nerd Font"
@@ -109,17 +114,38 @@
   
   (ch/leader-keys
    "b" '(:ignore t :wk "buffer")
-   "bb" '(switch-to-buffer :wk "Switch buffer")
-   "bk" '(kill-this-buffer :wk "Kill this buffer")
-   "bn" '(next-buffer :wk "Next Buffer")
-   "bp" '(previous-buffer :wk "Previous Buffer")
-  ))
+   "b b" '(switch-to-buffer :wk "Switch buffer")
+   "b k" '(kill-this-buffer :wk "Kill this buffer")
+   "b n" '(next-buffer :wk "Next Buffer")
+   "b p" '(previous-buffer :wk "Previous Buffer"))
+
+  (ch/leader-keys
+    "e" '(:ignore t :wk "Evaluate")
+    "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+    "e e" '(eval-expression :wk "Evaluate an elisp expression")
+    "e r" '(eval-region :wk "Evaluate elisp in region"))
+  
+  (ch/leader-keys
+   "p" '(:ignore t :wk "magit")
+   "p s" '(magit-status :wk "Git Status")
+   "p c" '(magit-commit :wk "Git Commit")
+   "p p" '(magit-push :wk "Git Push"))
+
+  (ch/leader-keys
+    "h" '(:ignore t :wk "help")
+    "h f" '(describe-function :wk "Describe Function")
+    "h v" '(describe-variable :wk "Describe Variable")))
 
 ;; Completion Framework
 (use-package vertico
   :demand t
   :config
   (vertico-mode 1))
+
+(use-package vertico-posframe
+  :after vertico
+  :config
+  (vertico-posframe-mode 1))
 
 (use-package marginalia
   :after vertico
@@ -130,6 +156,14 @@
   :after vertico
   :config
   (setq completion-styles '(orderless)))
+
+
+(use-package consult
+  :after vertico
+  :init
+  (setq register-previw-delay 0.5
+	register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window))
 
 ;; -- Which Key --
 (use-package which-key
@@ -147,3 +181,18 @@
 	which-key-idle-delay 0.8
 	which-key-max-description-length 25
 	which-key-allow-imprecise-window-fit t))
+
+;; -- Magit --
+(use-package transient
+  :demand t)
+
+(use-package magit
+  :after transient)
+
+;; -- LSP --
+
+
+
+;; Terminal & Shell
+(use-package vterm
+  :demand t)
