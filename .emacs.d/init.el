@@ -42,6 +42,8 @@
 	(elpaca-use-package-mode)
 	(setq elpaca-use-package-by-default t))
 
+(elpaca-wait)
+
 ;; ----- General Customizations -----
 (use-package emacs
   :ensure nil
@@ -56,13 +58,32 @@
 
 ;; -- Load Theme --
 (use-package doom-themes
+  :demand t
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
   (load-theme 'doom-dracula t))
 
+;; -- Config Fonts --
+(set-face-attribute 'default nil
+		    :font "JetBrainsMono Nerd Font"
+		    :height 110
+		    :weight 'medium)
+(set-face-attribute 'fixed-pitch nil
+		    :font "JetBrainsMono Nerd Font"
+		    :height 110
+		    :weight 'medium)
+(set-face-attribute 'font-lock-comment-face nil
+		    :slant 'italic)
+(set-face-attribute 'font-lock-keyword-face nil
+		    :slant 'italic)
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font"))
+
+(setq-default line-spacing 0.12)
+
 ;; Load Evil Mode
 (use-package evil
+  :demand t
   :init
   (setq evil-want-keybinding nil
 	evil-vsplit-window-right t
@@ -73,3 +94,56 @@
   :after evil
   :config
   (evil-collection-init))
+
+;; General Keybindings
+(use-package general
+  :demand t
+  :config
+  (general-evil-setup)
+  ;; -- set up global leader key
+  (general-create-definer ch/leader-keys
+			  :states '(normal insert visual emacs)
+			  :keymaps 'override
+			  :prefix "SPC" ;; Set Leader
+			  :global-prefix "M-SPC") ;; access leader in insert mode
+  
+  (ch/leader-keys
+   "b" '(:ignore t :wk "buffer")
+   "bb" '(switch-to-buffer :wk "Switch buffer")
+   "bk" '(kill-this-buffer :wk "Kill this buffer")
+   "bn" '(next-buffer :wk "Next Buffer")
+   "bp" '(previous-buffer :wk "Previous Buffer")
+  ))
+
+;; Completion Framework
+(use-package vertico
+  :demand t
+  :config
+  (vertico-mode 1))
+
+(use-package marginalia
+  :after vertico
+  :config
+  (marginalia-mode 1))
+
+(use-package orderless
+  :after vertico
+  :config
+  (setq completion-styles '(orderless)))
+
+;; -- Which Key --
+(use-package which-key
+  :demand t
+  :init
+  (which-key-mode 1)
+  :config
+  (setq which-key-side-window-location 'bottom
+	which-key-sort-uppercase-first nil
+	which-key-add-column-padding 1
+	which-key-max-display-columsn nil
+	which-key-min-display-lines 6
+	which-key-side-window-slot -19
+	which-key-side-window-max-height 0.25
+	which-key-idle-delay 0.8
+	which-key-max-description-length 25
+	which-key-allow-imprecise-window-fit t))
