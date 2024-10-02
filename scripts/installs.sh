@@ -6,6 +6,7 @@ declare -a packages=(
 	tar
 	gcc
 	make
+    cmake
 	bzip2
 	curl
 	i3
