@@ -68,6 +68,10 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-dracula t))
 
+(use-package doom-modeline
+  :demand t
+  :hook (after-init . doom-modeline-mode))
+
 ;; -- Icons --
 (use-package all-the-icons
   :demand t
@@ -94,6 +98,16 @@
   :demand t 
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package focus
+  :demand t
+  :config
+  (focus-mode))
+
+(use-package hl-todo
+  :demand t
+  :config
+  (hl-todo-mode))
 
 ;; ----- Keybindings -----
 
@@ -218,6 +232,21 @@
 
 ;; ----- Navigation -----
 
+;; -- Dashboard --
+(use-package dashboard
+  :demand t
+  :config
+  (setq dashboard-center-content t
+        dashboard-vertically-center-content t
+        dasboard-show-shortcuts nil)
+  (setq dashboard-items '((recents . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
+  (setq dashboard-icon-type 'all-the-icons)
+  
+  (dashboard-setup-startup-hook))
+
 ;; -- Projectile --
 (use-package projectile
   :demand t
@@ -227,3 +256,17 @@
 ;; ----- Terminal/Shell -----
 (use-package vterm
   :demand t)
+
+;; ----- Misc -----
+
+;; -- GC --
+(use-package gcmh
+  :config
+  (gcmh-mode 1))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-substract after-init-time before-init-time)))
+                     gcs-done)))
