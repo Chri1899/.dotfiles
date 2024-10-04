@@ -45,18 +45,22 @@
 (elpaca-wait)
 
 ;; ----- General Customizations -----
+(setq custom-file "~/.emacs.d/custom.el")
+
 (use-package emacs
   :ensure nil
   :config
-  (setq inhibit-startup-message t
-	visible-bell t)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
   (global-display-line-numbers-mode 1)
   (blink-cursor-mode -1))
 
-;; -- Load Theme --
+(load-file custom-file)
+
+;; ----- Visuals ------
+
+;; -- Themes --
 (use-package doom-themes
   :demand t
   :config
@@ -64,12 +68,12 @@
 	doom-themes-enable-italic t)
   (load-theme 'doom-dracula t))
 
-;; -- Load Icons --
+;; -- Icons --
 (use-package all-the-icons
   :demand t
   :if (display-graphic-p))
 
-;; -- Config Fonts --
+;; -- Fonts --
 (set-face-attribute 'default nil
 		    :font "JetBrainsMono Nerd Font"
 		    :height 110
@@ -86,7 +90,14 @@
 
 (setq-default line-spacing 0.12)
 
-;; Load Evil Mode
+(use-package rainbow-delimiters
+  :demand t 
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+;; ----- Keybindings -----
+
+;; -- Evil Mode --
 (use-package evil
   :demand t
   :init
@@ -100,7 +111,7 @@
   :config
   (evil-collection-init))
 
-;; General Keybindings
+;; -- General --
 (use-package general
   :demand t
   :config
@@ -116,7 +127,7 @@
    "b" '(:ignore t :wk "buffer")
    "b b" '(switch-to-buffer :wk "Switch buffer")
    "b k" '(kill-this-buffer :wk "Kill this buffer")
-   "b n" '(next-buffer :wk "Next Buffer")
+   "b n" '(next-buffer :wk "Next Buffer"o
    "b p" '(previous-buffer :wk "Previous Buffer"))
 
   (ch/leader-keys
@@ -126,17 +137,25 @@
     "e r" '(eval-region :wk "Evaluate elisp in region"))
   
   (ch/leader-keys
-   "p" '(:ignore t :wk "magit")
-   "p s" '(magit-status :wk "Git Status")
-   "p c" '(magit-commit :wk "Git Commit")
-   "p p" '(magit-push :wk "Git Push"))
+   "g" '(:ignore t :wk "magit")
+   "g s" '(magit-status :wk "Git Status")
+   "g c" '(magit-commit :wk "Git Commit")
+   "g p" '(magit-push :wk "Git Push"))
 
   (ch/leader-keys
     "h" '(:ignore t :wk "help")
     "h f" '(describe-function :wk "Describe Function")
-    "h v" '(describe-variable :wk "Describe Variable")))
+    "h v" '(describe-variable :wk "Describe Variable"))
 
-;; Completion Framework
+  (ch/leader-keys
+    "p" '(:ignore t :wk "Projectile")
+    "p f" '(projectile-find-file :wk "Find File")
+    )
+  )
+
+;; ----- Completion Framework -----
+
+;; -- Vertico --
 (use-package vertico
   :demand t
   :config
@@ -147,17 +166,19 @@
   :config
   (vertico-posframe-mode 1))
 
+;; -- Marginalia --
 (use-package marginalia
   :after vertico
   :config
   (marginalia-mode 1))
 
+;; -- Orderless --
 (use-package orderless
   :after vertico
   :config
   (setq completion-styles '(orderless)))
 
-
+;; -- Consult -- 
 (use-package consult
   :after vertico
   :init
@@ -182,17 +203,27 @@
 	which-key-max-description-length 25
 	which-key-allow-imprecise-window-fit t))
 
-;; -- Magit --
+;; ----- Verion Control -----
+;; -- Transient --
 (use-package transient
   :demand t)
 
+;; -- Magit --
 (use-package magit
   :after transient)
 
+;; ----- Languages -----
+
 ;; -- LSP --
 
+;; ----- Navigation -----
 
+;; -- Projectile --
+(use-package projectile
+  :demand t
+  :config
+  (projectile-mode 1))
 
-;; Terminal & Shell
+;; ----- Terminal/Shell -----
 (use-package vterm
   :demand t)
