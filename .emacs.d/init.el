@@ -127,7 +127,7 @@
    "b" '(:ignore t :wk "buffer")
    "b b" '(switch-to-buffer :wk "Switch buffer")
    "b k" '(kill-this-buffer :wk "Kill this buffer")
-   "b n" '(next-buffer :wk "Next Buffer"o
+   "b n" '(next-buffer :wk "Next Buffer")
    "b p" '(previous-buffer :wk "Previous Buffer"))
 
   (ch/leader-keys
