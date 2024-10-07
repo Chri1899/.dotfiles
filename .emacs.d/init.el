@@ -70,7 +70,8 @@
 
 (use-package doom-modeline
   :demand t
-  :hook (after-init . doom-modeline-mode))
+  :config
+  (doom-modeline-mode 1))
 
 ;; -- Icons --
 (use-package all-the-icons
@@ -149,7 +150,17 @@
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e e" '(eval-expression :wk "Evaluate an elisp expression")
     "e r" '(eval-region :wk "Evaluate elisp in region"))
-  
+
+  (ch/leader-keys
+    "c" '(:ignore t :wk "Consult Navigaton")
+    "c b" '(consult-buffer :wk "Switch buffer same frame")
+    "c b f" '(consult-buffer-other-frame :wk "Switch buffer in another frame")
+    "c b w" '(consult-buffer-other-window :wk "Switch buffer in another window")
+    "c f" '(consult-find :wk "Find file regex")
+    "c l" '(consult-line :wk "Go to line")
+    "c r" '(consult-ripgre :wk "Find file by ripgrepping contents")
+    )
+
   (ch/leader-keys
    "g" '(:ignore t :wk "magit")
    "g s" '(magit-status :wk "Git Status")
@@ -169,7 +180,7 @@
 
 ;; ----- Completion Framework -----
 
-;; -- Vertico --
+;; -- Vertico -- UI
 (use-package vertico
   :demand t
   :config
@@ -180,17 +191,17 @@
   :config
   (vertico-posframe-mode 1))
 
-;; -- Marginalia --
-(use-package marginalia
-  :after vertico
-  :config
-  (marginalia-mode 1))
-
-;; -- Orderless --
+-- Orderless -- Completion
 (use-package orderless
   :after vertico
   :config
   (setq completion-styles '(orderless)))
+
+;; -- Marginalia -- Annotations
+(use-package marginalia
+  :after vertico
+  :config
+  (marginalia-mode 1))
 
 ;; -- Consult -- 
 (use-package consult
@@ -229,6 +240,12 @@
 ;; ----- Languages -----
 
 ;; -- LSP --
+(use-package lsp-mode
+  :demand t
+  :init
+  :add-hook)
+
+(use-package 
 
 ;; ----- Navigation -----
 
