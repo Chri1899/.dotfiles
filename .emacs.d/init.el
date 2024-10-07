@@ -154,8 +154,6 @@
   (ch/leader-keys
     "c" '(:ignore t :wk "Consult Navigaton")
     "c b" '(consult-buffer :wk "Switch buffer same frame")
-    "c b f" '(consult-buffer-other-frame :wk "Switch buffer in another frame")
-    "c b w" '(consult-buffer-other-window :wk "Switch buffer in another window")
     "c f" '(consult-find :wk "Find file regex")
     "c l" '(consult-line :wk "Go to line")
     "c r" '(consult-ripgre :wk "Find file by ripgrepping contents")
@@ -191,7 +189,7 @@
   :config
   (vertico-posframe-mode 1))
 
--- Orderless -- Completion
+;; -e Orderless -- Completion
 (use-package orderless
   :after vertico
   :config
