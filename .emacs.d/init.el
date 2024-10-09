@@ -1,12 +1,26 @@
 ;;; -*- lexical-binding: t; -*-
 
-(defvar my/local-dir (concat user-emacs-directory ".local/") "Local state directory")
+;; -- Local Directory
+(defvar local-dir (concat user-emacs-directory ".local/") "Local state directory")
+(unless (file-exists-p local-dir)
+  (make-directory local-dir))
+
+;; -- Undo Directory
+(defvar undo-dir (concat local-dir "undos/") "Local undo directory")
+(unless (file-exists-p undo-dir)
+  (make-directory undo-dir))
+
+;; -- Auto Save Dir
+(defvar auto-save-dir (concat local-dir "auto-saves/") "Local auto save directory")
+ (unless (file-exists-p auto-save-dir)
+  (make-directory auto-save-dir))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 (setq custom-file "~/.emacs.d/custom.el")
 
 ;; ----- Package Manager -----
 (defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" my/local-dir))
+(defvar elpaca-directory (expand-file-name "elpaca/" local-dir))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
@@ -69,7 +83,8 @@
   :demand t
   :config
   (setq real-auto-save-interval 10
-        auto-save-file-name-transforms `((".*" ,(concat my/local-dir "autosaves/") t)))
+        auto-save-file-name-transforms `((".*" . ,(auto-save-dir)))
+        auto-save-list-file-name `((".*" . ,auto-save-dir)))
   (global-auto-revert-mode 1)
   :hook ((text-mode . real-auto-save-mode)
          (prog-mode . real-auto-save-mode)))
@@ -380,6 +395,6 @@
 (use-package undo-tree
   :config
   (setq undo-tree-auto-save-history t
-        undo-tree-history-directory-alist '(( "." . ,(concat my/local-dir "undo/"))))
+        undo-tree-history-directory-alist `(("." . ,undo-dir)))
   :hook ((text-mode . undo-tree-mode)
          (prog-mode . undo-tree-mode)))
