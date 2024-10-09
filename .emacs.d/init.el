@@ -1,5 +1,12 @@
+;;; -*- lexical-binding: t; -*-
+
+(defvar my/local-dir (concat user-emacs-directory ".local/") "Local state directory")
+(defalias 'yes-or-no-p 'y-or-n-p)
+(setq custom-file "~/.emacs.d/custom.el")
+
+;; ----- Package Manager -----
 (defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-directory (expand-file-name "elpaca/" my/local-dir))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
@@ -37,7 +44,7 @@
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 
-;; Use-Package support
+;; -- Use-Package --
 (elpaca elpaca-use-package
 	(elpaca-use-package-mode)
 	(setq elpaca-use-package-by-default t))
@@ -45,8 +52,6 @@
 (elpaca-wait)
 
 ;; ----- General Customizations -----
-(setq custom-file "~/.emacs.d/custom.el")
-
 (use-package emacs
   :ensure nil
   :config
@@ -57,6 +62,17 @@
   (blink-cursor-mode -1))
 
 (load-file custom-file)
+(recentf-mode)
+
+;; -- Auto Save --
+(use-package real-auto-save
+  :demand t
+  :config
+  (setq real-auto-save-interval 10
+        auto-save-file-name-transforms `((".*" ,(concat my/local-dir "autosaves/") t)))
+  (global-auto-revert-mode 1)
+  :hook ((text-mode . real-auto-save-mode)
+         (prog-mode . real-auto-save-mode)))
 
 ;; ----- Visuals ------
 
@@ -69,9 +85,17 @@
   (load-theme 'doom-dracula t))
 
 (use-package doom-modeline
-  :demand t
+  :init
+  (setq doom-modeline-buffer-file-name-style 'truncate-upto-project
+        doom-modeline-icon t
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t
+        doom-modeline-lsp t
+        doom-modeline-column-zero-base t)
   :config
-  (doom-modeline-mode 1))
+  (doom-modeline-mode)
+  :custom
+  (doom-modeline-height 30))
 
 ;; -- Icons --
 (use-package all-the-icons
@@ -95,20 +119,17 @@
 
 (setq-default line-spacing 0.12)
 
-(use-package rainbow-delimiters
-  :demand t 
+(use-package rainbow-delimiters 
   :config
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package focus
-  :demand t
   :config
-  (focus-mode))
+  (add-hook 'prog-mode-hook #'focus-mode))
 
 (use-package hl-todo
-  :demand t
   :config
-  (hl-todo-mode))
+  (add-hook 'prog-mode-hook #'hl-todo-mode))
 
 ;; ----- Keybindings -----
 
@@ -137,45 +158,69 @@
 			  :keymaps 'override
 			  :prefix "SPC" ;; Set Leader
 			  :global-prefix "M-SPC") ;; access leader in insert mode
-  
+
+  ;; Open
+  (ch/leader-keys
+    "o" '(:ignore t :wk "open")
+    "o f" '(:ignore t :wk "open file")
+    "o f f" '(find-file :wk "Open file in directory")
+    "o f p" '(projectile-find-file :wk "Open file in project")
+    "o p" '(projectile-switch-project :wk "Open Project")
+    "o c" '(vterm :wk "Open Console"))
+
+  ;; Buffer 
   (ch/leader-keys
    "b" '(:ignore t :wk "buffer")
-   "b b" '(switch-to-buffer :wk "Switch buffer")
+   "b b" '(consult-buffer :wk "Switch buffer")
    "b k" '(kill-this-buffer :wk "Kill this buffer")
    "b n" '(next-buffer :wk "Next Buffer")
    "b p" '(previous-buffer :wk "Previous Buffer"))
 
+  ;; Search
+  (ch/leader-keys
+    "s" '(:ignore t :wk "search")
+    "s b" '(consult-line :wk "Search in Buffer")
+    "s g" '(consult-git-grep :wk "Search Git Grep")
+    "s r" '(consult-ripgrep :wk "Search rip grep"))
+  
+  ;; Eval
   (ch/leader-keys
     "e" '(:ignore t :wk "Evaluate")
     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
     "e e" '(eval-expression :wk "Evaluate an elisp expression")
     "e r" '(eval-region :wk "Evaluate elisp in region"))
-
-  (ch/leader-keys
-    "c" '(:ignore t :wk "Consult Navigaton")
-    "c b" '(consult-buffer :wk "Switch buffer same frame")
-    "c f" '(consult-find :wk "Find file regex")
-    "c l" '(consult-line :wk "Go to line")
-    "c r" '(consult-ripgre :wk "Find file by ripgrepping contents")
-    )
-
+ 
+;; Git
   (ch/leader-keys
    "g" '(:ignore t :wk "magit")
    "g s" '(magit-status :wk "Git Status")
    "g c" '(magit-commit :wk "Git Commit")
    "g p" '(magit-push :wk "Git Push"))
 
+  ;; Help
   (ch/leader-keys
     "h" '(:ignore t :wk "help")
     "h f" '(describe-function :wk "Describe Function")
     "h v" '(describe-variable :wk "Describe Variable"))
 
+  ;; Window Management
   (ch/leader-keys
-    "p" '(:ignore t :wk "Projectile")
-    "p f" '(projectile-find-file :wk "Find File")
-    )
-  )
+    "w" '(:ignore t :wk "window")
+    "w s" '(:ignore t :wk "window split")
+    "w s h" '(split-window-horizontally :wk "window split horizontal")
+    "w s v" '(split-window-vertically :wk "window split vertical")
+    "w c" '(other-window :wk "cycle next window"))
 
+  ;; Undo
+  (ch/leader-keys
+    "u" '(:ignore t :wk "undo")
+    "u t" '(:ignore t :wk "undo toggles")
+    "u t t" '(undo-tree-visualizer-toggle-timestamps :wk "toggle timestamps")
+    "u u" '(undo-tree-undo :wk "undo")
+    "u r" '(undo-tree-redo :wk "redo")
+    "u v" '(undo-tree-visualize :wk "visualizer")
+    ))
+  
 ;; ----- Completion Framework -----
 
 ;; -- Vertico -- UI
@@ -189,7 +234,8 @@
   :config
   (vertico-posframe-mode 1))
 
-;; -e Orderless -- Completion
+
+;; -- Orderless -- Completion
 (use-package orderless
   :after vertico
   :config
@@ -209,27 +255,48 @@
 	register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window))
 
+;; -- Code Completion with Company --
+;; TODO Maybe add general keybindings
+(use-package company
+  :defer t
+  :config
+  (setq company-tooltip-limit 20
+        company-idle-delay 0.2
+        company-echo-delay 0
+        company-begin-commands '(self-insert-command)
+        company-tooltip-align-annotations t
+        company-dabbrev-downcase nil
+        company-require-match t
+        company-minimum-prefix-length 3
+        company-backends '(company-files company-keywords company-capf)
+        company-frontends '(company-pseudo-tooltip-frontend company-preview-frontend))
+  :hook (prog-mode . company-mode))
+
 ;; -- Which Key --
 (use-package which-key
   :demand t
   :init
-  (which-key-mode 1)
+  (setq which-key-enable-extended-define-key t)
   :config
-  (setq which-key-side-window-location 'bottom
-	which-key-sort-uppercase-first nil
-	which-key-add-column-padding 1
-	which-key-max-display-columsn nil
-	which-key-min-display-lines 6
-	which-key-side-window-slot -19
-	which-key-side-window-max-height 0.25
-	which-key-idle-delay 0.8
-	which-key-max-description-length 25
-	which-key-allow-imprecise-window-fit t))
+  (which-key-mode)
+  :custom
+  (which-key-side-window-location 'top)
+  (which-key-sort-order 'which-key-key-order-alpha)
+  (which-key-side-window-max-width 0.3)
+  (which-key-side-window-max-height 0.5)
+  (which-key-idle-delay 2)
+  (which-key-sort-uppercase-first nil)
+  (which-key-add-column-padding 1)
+  (which-key-max-display-columns nil)
+  (which-key-min-display-lines 6)
+  (which-key-side-window-slot -19)
+  (which-key-max-description-length 25)
+  (which-key-allow-imprecise-window-fit t)
+  :diminish which-key-mode)
 
 ;; ----- Verion Control -----
 ;; -- Transient --
-(use-package transient
-  :demand t)
+(use-package transient)
 
 ;; -- Magit --
 (use-package magit
@@ -237,13 +304,38 @@
 
 ;; ----- Languages -----
 
-;; -- LSP --
+;; -- IDE Features with LSP --
 (use-package lsp-mode
-  :demand t
-  :init
-  :add-hook)
+  :config
+  (lsp-enable-which-key-integration t))
 
-(use-package 
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+(use-package lsp-treemacs
+  :after lsp)
+
+;; -- Debugging with DAP --
+
+(use-package dap-mode)
+
+;; -- Java --
+(use-package lsp-java
+  :hook ((java-mode . lsp-deferred)))
+
+(use-package dap-java
+  :ensure nil)
+
+;; -- Treesitter --
+(use-package tree-sitter)
+
+(use-package tree-sitter-langs)
+
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode -1))
 
 ;; ----- Navigation -----
 
@@ -264,11 +356,15 @@
 
 ;; -- Projectile --
 (use-package projectile
-  :demand t
-  :config
-  (projectile-mode 1))
+  :diminish t
+  :config (projectile-mode)
+  :init
+  (when (file-directory-p "~/Projects")
+    (setq projectile-project-search-path  '("~/Projects")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
 ;; ----- Terminal/Shell -----
+;; TODO Add General Bindings
 (use-package vterm
   :demand t)
 
@@ -276,12 +372,14 @@
 
 ;; -- GC --
 (use-package gcmh
+  :demand t
   :config
   (gcmh-mode 1))
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-substract after-init-time before-init-time)))
-                     gcs-done)))
+
+;; -- Undo-Tree --
+(use-package undo-tree
+  :config
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist '(( "." . ,(concat my/local-dir "undo/"))))
+  :hook ((text-mode . undo-tree-mode)
+         (prog-mode . undo-tree-mode)))

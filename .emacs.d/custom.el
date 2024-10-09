@@ -6,8 +6,7 @@
  '(indent-tabs-mode nil)
  '(visible-bell nil)
  '(make-backup-files nil)
- '(gc-cons-threshold 402653184)
- '(gc-cons-percentage 0.6)
+ '(gc-cons-threshold (* 50 1000 1000))
  )
 (custom-set-faces
  )
