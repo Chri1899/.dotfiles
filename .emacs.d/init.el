@@ -12,7 +12,15 @@
 
 ;; -- Auto Save Dir
 (defvar auto-save-dir (concat local-dir "auto-saves/") "Local auto save directory")
+<<<<<<< HEAD
  (unless (file-exists-p auto-save-dir)
+=======
+<<<<<<< HEAD
+(unless (file-exists-p auto-save-dir)
+=======
+ (unless (file-exists-p auto-save-dir)
+>>>>>>> origin/main
+>>>>>>> origin/main
   (make-directory auto-save-dir))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -83,8 +91,18 @@
   :demand t
   :config
   (setq real-auto-save-interval 10
+<<<<<<< HEAD
         auto-save-file-name-transforms `((".*" . ,(auto-save-dir)))
         auto-save-list-file-name `((".*" . ,auto-save-dir)))
+=======
+<<<<<<< HEAD
+        auto-save-file-name-transforms `((".*" , auto-save-dir t))
+        auto-save-list-file-name `((".*" , auto-save-dir t)))
+=======
+        auto-save-file-name-transforms `((".*" . ,(auto-save-dir)))
+        auto-save-list-file-name `((".*" . ,auto-save-dir)))
+>>>>>>> origin/main
+>>>>>>> origin/main
   (global-auto-revert-mode 1)
   :hook ((text-mode . real-auto-save-mode)
          (prog-mode . real-auto-save-mode)))
