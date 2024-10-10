@@ -6,7 +6,7 @@
  '(indent-tabs-mode nil)
  '(visible-bell nil)
  '(make-backup-files nil)
- '(gc-cons-threshold (* 50 1000 1000))
+ '(warning-minimum-level :emergency)
  )
 (custom-set-faces
  )

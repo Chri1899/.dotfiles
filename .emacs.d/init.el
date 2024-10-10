@@ -12,7 +12,7 @@
 
 ;; -- Auto Save Dir
 (defvar auto-save-dir (concat local-dir "auto-saves/") "Local auto save directory")
- (unless (file-exists-p auto-save-dir)
+(unless (file-exists-p auto-save-dir)
   (make-directory auto-save-dir))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -65,6 +65,12 @@
 
 (elpaca-wait)
 
+;; -- Garbage Collection
+(use-package gcmh
+  :demand t
+  :config
+  (gcmh-mode 1))
+
 ;; ----- General Customizations -----
 (use-package emacs
   :ensure nil
@@ -83,8 +89,8 @@
   :demand t
   :config
   (setq real-auto-save-interval 10
-        auto-save-file-name-transforms `((".*" . ,(auto-save-dir)))
-        auto-save-list-file-name `((".*" . ,auto-save-dir)))
+        auto-save-file-name-transforms `((".*" , auto-save-dir t))
+        auto-save-list-file-name `((".*" , auto-save-dir t)))
   (global-auto-revert-mode 1)
   :hook ((text-mode . real-auto-save-mode)
          (prog-mode . real-auto-save-mode)))
@@ -126,10 +132,6 @@
 		    :font "JetBrainsMono Nerd Font"
 		    :height 110
 		    :weight 'medium)
-(set-face-attribute 'font-lock-comment-face nil
-		    :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-		    :slant 'italic)
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font"))
 
 (setq-default line-spacing 0.12)
@@ -174,6 +176,12 @@
 			  :prefix "SPC" ;; Set Leader
 			  :global-prefix "M-SPC") ;; access leader in insert mode
 
+  ;; Toggles
+  (ch/leader-keys
+    "t" '(:ignore t :wk "toggle")
+    "t r" '(rainbow-delimiters-mode :wk "Toggle Rainbow Delimiters")
+    "t f" '(focus-mode :wk "Toggel focus mode"))
+  
   ;; Open
   (ch/leader-keys
     "o" '(:ignore t :wk "open")
@@ -384,12 +392,6 @@
   :demand t)
 
 ;; ----- Misc -----
-
-;; -- GC --
-(use-package gcmh
-  :demand t
-  :config
-  (gcmh-mode 1))
 
 ;; -- Undo-Tree --
 (use-package undo-tree
