@@ -132,10 +132,6 @@
 		    :font "JetBrainsMono Nerd Font"
 		    :height 110
 		    :weight 'medium)
-(set-face-attribute 'font-lock-comment-face nil
-		    :slant 'italic)
-(set-face-attribute 'font-lock-keyword-face nil
-		    :slant 'italic)
 (add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font"))
 
 (setq-default line-spacing 0.12)
@@ -180,6 +176,13 @@
 			  :prefix "SPC" ;; Set Leader
 			  :global-prefix "M-SPC") ;; access leader in insert mode
 
+  ;; Toggles
+  (ch/leader-keys
+    "t" '(:ignore t :wk "toggles")
+    "t r" '(rainbow-delimiters-mode :wk "Toggle Rainbow Delimiters")
+    "t f" '(focus-mode :wk "Toggle focus Mode")
+    "t h" '(hl-todo-mode :wk "Toggle HL-Todo Mode"))
+  
   ;; Open
   (ch/leader-keys
     "o" '(:ignore t :wk "open")
@@ -277,7 +280,6 @@
   (advice-add #'register-preview :override #'consult-register-window))
 
 ;; -- Code Completion with Company --
-;; TODO Maybe add general keybindings
 (use-package company
   :defer t
   :config
@@ -385,7 +387,6 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 ;; ----- Terminal/Shell -----
-;; TODO Add General Bindings
 (use-package vterm
   :demand t)
 
@@ -393,7 +394,6 @@
 
 ;; -- Flycheck Syntax Checking --
 (use-package flycheck
-  :demand t
   :config
   (add-hook 'prog-mode-hook #'flycheck-mode))
 
