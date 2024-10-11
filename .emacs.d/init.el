@@ -391,6 +391,12 @@
   :config
   (gcmh-mode 1))
 
+;; -- Flycheck Syntax Checking --
+(use-package flycheck
+  :demand t
+  :config
+  (add-hook 'prog-mode-hook #'flycheck-mode))
+
 ;; -- Undo-Tree --
 (use-package undo-tree
   :config
