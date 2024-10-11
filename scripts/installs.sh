@@ -25,6 +25,7 @@ declare -a packages=(
 	picom
 	polybar
     ripgrep
+    gh
 )
 
 for package in "${packages[@]}"; do
