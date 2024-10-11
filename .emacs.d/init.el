@@ -65,6 +65,12 @@
 
 (elpaca-wait)
 
+;; -- Garbage Collection
+(use-package gcmh
+  :demand t
+  :config
+  (gcmh-mode 1))
+
 ;; ----- General Customizations -----
 (use-package emacs
   :ensure nil
@@ -76,7 +82,7 @@
   (blink-cursor-mode -1))
 
 (load-file custom-file)
-(recentf-mode)
+(recentf-mode 1)
 
 ;; -- Auto Save --
 (use-package real-auto-save
@@ -384,12 +390,6 @@
   :demand t)
 
 ;; ----- Misc -----
-
-;; -- GC --
-(use-package gcmh
-  :demand t
-  :config
-  (gcmh-mode 1))
 
 ;; -- Flycheck Syntax Checking --
 (use-package flycheck
