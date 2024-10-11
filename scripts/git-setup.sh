@@ -8,3 +8,4 @@ echo "Configuring GIT"
 
 git config --global user.name "chri1899"
 git config --global user.email "c.b-1@outlook.de"
+git config --global init.defaultBranch "main"
