@@ -1,11 +1,9 @@
 #!/bin/zsh
 
 declare -a fonts=(
-	InconsolataGo
-	FiraMono
 	JetBrainsMono
-	Hack
 )
+
 
 fonts_dir="${HOME}/.local/share/fonts"
 
@@ -26,4 +24,6 @@ for font in "${fonts[@]}"; do
 	rm "$tar_file"
 done
 
-sudo apt install fonts-font-awesome
+if [[ ! $(grep -i Microsoft /proc/version]];then
+	sudo apt install fonts-font-awesome
+fi
