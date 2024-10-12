@@ -1,32 +1,51 @@
 #!bin/zsh
 
-# APT Packages
+# Packages for all underlying systems
+
 declare -a packages=(
 	stow
 	tar
 	gcc
 	make
-    cmake
-    libtool-bin
+	cmake
+    	libtool-bin
 	bzip2
 	curl
-	i3
 	alacritty
 	zsh
-    nodejs
-    npm
+    	nodejs
+    	npm
 	neovim
 	python3
 	openjdk-17-jdk
 	gradle
-    maven
+   	maven
 	fzf
 	feh
 	picom
 	polybar
-    ripgrep
-    gh
+    	ripgrep
+    	gh
 )
+
+# If not on WSL
+
+if [[ ! $(grep -i Microsoft /proc/version) ]]; then
+	packaes+=(i3 polybar picom)
+	
+	# Install Brave
+	sudo apt install curl
+
+	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+	sudo apt update
+
+	sudo apt install brave-browser
+fi
+
+# Install packages
 
 for package in "${packages[@]}"; do
 	echo "Installing ${package}"
@@ -38,17 +57,6 @@ for package in "${packages[@]}"; do
 		chsh -s $(which zsh)
 	fi
 done
-
-# Install Brave
-sudo apt install curl
-
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-
-sudo apt update
-
-sudo apt install brave-browser
 
 # Install Emacs
 sudo apt-add-repository universe
