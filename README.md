@@ -8,6 +8,7 @@ Step by Step install Guide for a fresh System
    - Move to Documents
    - sudo chmod 777 VBoxLinuxAdditions.run
    - sudo ./VBoxLinuxAdditions.run
+3. Create SSH Connection for GitHub
 4. Install GIT
 5. Clone this Repo
 6. Run all scripts in script Folder
