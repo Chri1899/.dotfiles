@@ -26,6 +26,7 @@ declare -a packages=(
 	polybar
     	ripgrep
     	gh
+	tmux
 )
 
 # If not on WSL
