@@ -2,6 +2,8 @@
 
 declare -a fonts=(
 	JetBrainsMono
+	Hack
+	SourceCodePro
 )
 
 
@@ -23,3 +25,5 @@ for font in "${fonts[@]}"; do
 	echo "Removing tarball"
 	rm "$tar_file"
 done
+
+fc-cache -fv

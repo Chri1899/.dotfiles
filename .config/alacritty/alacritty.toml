@@ -6,12 +6,12 @@ opacity = 0.7
 decorations = "None"
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono"
 style = "Bold"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono"
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono"
 style = "Regular"

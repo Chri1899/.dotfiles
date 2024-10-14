@@ -11,7 +11,6 @@ declare -a packages=(
     	libtool-bin
 	bzip2
 	curl
-	alacritty
 	zsh
     	nodejs
     	npm
@@ -21,9 +20,6 @@ declare -a packages=(
 	gradle
    	maven
 	fzf
-	feh
-	picom
-	polybar
     	ripgrep
     	gh
 	tmux
@@ -32,7 +28,7 @@ declare -a packages=(
 # If not on WSL
 
 if [[ ! $(grep -i Microsoft /proc/version) ]]; then
-	packages+=(i3 polybar picom)
+	packages+=(feh i3 polybar picom alacritty)
 	
 	# Install Brave
 	
