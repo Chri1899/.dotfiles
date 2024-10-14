@@ -31,9 +31,10 @@ declare -a packages=(
 # If not on WSL
 
 if [[ ! $(grep -i Microsoft /proc/version) ]]; then
-	packaes+=(i3 polybar picom)
+	packages+=(i3 polybar picom)
 	
 	# Install Brave
+	
 	sudo apt install curl
 
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -43,6 +44,14 @@ if [[ ! $(grep -i Microsoft /proc/version) ]]; then
 	sudo apt update
 
 	sudo apt install brave-browser
+
+	# Install Emacs
+
+	sudo apt-add remote universe
+
+	sudo apt update
+
+	sudo apt installe emacs-gtk
 fi
 
 # Install packages
@@ -57,10 +66,3 @@ for package in "${packages[@]}"; do
 		chsh -s $(which zsh)
 	fi
 done
-
-# Install Emacs
-sudo apt-add-repository universe
-
-sudo apt update
-
-sudo apt install emacs-gtk
