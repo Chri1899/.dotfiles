@@ -23,7 +23,3 @@ for font in "${fonts[@]}"; do
 	echo "Removing tarball"
 	rm "$tar_file"
 done
-
-if [[ ! $(grep -i Microsoft /proc/version]];then
-	sudo apt install fonts-font-awesome
-fi
