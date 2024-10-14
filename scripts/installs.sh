@@ -67,3 +67,5 @@ for package in "${packages[@]}"; do
 		chsh -s $(which zsh)
 	fi
 done
+
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
