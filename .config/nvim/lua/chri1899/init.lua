@@ -1,5 +1,5 @@
-require("config.bindings")
-require("config.customs")
-require("config.autocmds")
+require("configs.bindings")
+require("configs.customs")
+require("configs.autocmds")
 require("lazy_init")
 
