@@ -1,34 +1,32 @@
 return {
-	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
+		dependencies = {
+				"windwp/nvim-ts-autotag"
+		},
+
+		build = ':TSUpdate',
 		config = function()
-			require("nvim-treesitter.configs").setup({
-				-- A list of parser names, or "all"
-				ensure_installed = { "vimdoc", "javascript", "c", "lua", "java", "python" },
+				local ts_config = require("nvim-treesitter.configs")
 
-				-- Install parsers synchronously (only applied to "ensure_installed")
-				sync_install = false,
+				ts_config.setup({
+						-- make sure we have language servers installed
+						ensure_installed = {
+								"vim",
+								"vimdoc",
+								"lua",
+								"java",
+								"html",
+								"css",
+								"javascript",
+								"json",
+								"gitignore",
+								"markdown",
+								"tsx"
+						},
 
-				-- Automatically install missing parsers when entering buffer
-				-- Recommendation: set to false if you dont have tree-sitter clie installed locally
-				auto_install = true,
+						highlight = {enable = true},
 
-				indent = {
-					enable = true
-				},
-
-				highlight = {
-					-- false will disbale the whole extension
-					enable = true,
-
-					-- setting this to true will run :h syntax and tree-sitter at the same time
-					-- set this to true if you depend on syntax being enabled
-					-- using this option may slow down your editor, and you may see some duplcate
-					-- Instead of true it can also be a list of languages
-					additional_vim_regex_highlighting = { "markdown" },
-				},
-			})
+						autotag = {enable = true}
+				})
 		end
-	}
 }

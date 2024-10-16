@@ -1,3 +1,5 @@
-require("chri1899.remap")
-require("chri1899.set")
-require("chri1899.lazy")
+require("chri1899.configs.bindings")
+require("chri1899.configs.customs")
+require("chri1899.configs.autocmds")
+require("chri1899.lazy_init")
+
