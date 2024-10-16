@@ -11,3 +11,4 @@ README.md
 
 .config/nvim/lazy-lock.json
 .config/nvim/.luarc.json
+.config/gh/
