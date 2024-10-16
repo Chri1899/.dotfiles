@@ -63,6 +63,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
+
+export COLORTERM=truecolor
+
 # Source aliases
 source $HOME/.zsh_aliases
-export COLORTERM=truecolor
