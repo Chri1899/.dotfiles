@@ -37,6 +37,7 @@ return {
 
 										find_files = {
 												theme = "dropdown",
+												hidden = true,
 										},
 
 										lsp_references = {
