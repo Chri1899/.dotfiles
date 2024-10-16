@@ -65,3 +65,4 @@ source /usr/share/doc/fzf/examples/completion.zsh
 
 # Source aliases
 source $HOME/.zsh_aliases
+export COLORTERM=truecolor
