@@ -13,3 +13,5 @@
 
 \.config/nvim/lazy-lock.json
 \.config/nvim/.luarc.json
+
+\.config/tmux/plugins
