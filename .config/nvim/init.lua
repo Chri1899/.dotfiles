@@ -1,1 +1,4 @@
-require("chri1899")
+require 'core.options'
+require 'core.remaps'
+
+require 'lazy-init'
