@@ -42,7 +42,7 @@ local function get_workspace()
     -- Get the home directory of your operating system
     local home = os.getenv "HOME"
     -- Declare a directory where you would like to store project information
-    local workspace_path = home .. "/Projects"
+    local workspace_path = home .. "/Projects/workspace"
     -- Determine the project name
     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
     -- Create the workspace directory by concatenating the designated workspace path and the project name
@@ -298,7 +298,9 @@ local function setup_jdtls()
     }
 
     -- Start the JDTLS server
+    print("Attempting to start JDTLS")
     require('jdtls').start_or_attach(config)
+    print("Started JDTLS")
 end
 
 return {
