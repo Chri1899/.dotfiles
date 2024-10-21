@@ -6,13 +6,10 @@ vim.g.maplocalleader = ' '
 vim.keymap.set({"n", "v"}, "<Space>", "<Nop>")
 
 -- Save File
-vim.keymap.set("n", "<Leader>s", "<cmd> w <CR>")
+vim.keymap.set("n", "<Leader>Ss", "<cmd> w <CR>", { desc = "Save File (with auto format)" })
 
 -- Save File without auto-formatting
-vim.keymap.set("n", "<Leader>sn", "<cmd>noautocmd w <CR>")
-
--- Delete single char without copying into registert
-vim.keymap.set("n", "x", "_x")
+vim.keymap.set("n", "<Leader>Sn", "<cmd>noautocmd w <CR>", { desc = "Save File without auto format." })
 
 -- Vertical Scroll and center
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
@@ -23,9 +20,9 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Window Management
-vim.keymap.set("n", "<leader>wv", "<C-w>v")
-vim.keymap.set("n", "<leader>wh", "<C-w>h")
-vim.keymap.set("n", "<leader>wc", ":close<CR>")
+vim.keymap.set("n", "<leader>wv", "<C-w>v", { desc = "Window: Split vertical" })
+vim.keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Window: Split horizontal" })
+vim.keymap.set("n", "<leader>wc", ":close<CR>", { desc = "Window: Close split "})
 
 -- Press JJ to exit insert mode
 vim.keymap.set("i", "jj", "<ESC>")
@@ -35,4 +32,4 @@ vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
 -- Source Config
-vim.keymap.set("n", "<leader><leader>", ":so<CR>")
+vim.keymap.set("n", "<leader><leader>", ":so<CR>", { desc = "Source Config" })
