@@ -31,5 +31,8 @@ vim.keymap.set("i", "jj", "<ESC>")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
+-- :Ex shortcut
+vim.keymap.set("n", "<leader>pv", "<cmd>Ex <CR>")
+
 -- Source Config
 vim.keymap.set("n", "<leader><leader>", ":so<CR>", { desc = "Source Config" })

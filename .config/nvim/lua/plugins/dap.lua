@@ -4,7 +4,7 @@ return {
         "rcarriga/nvim-dap-ui",
         "nvim-neotest/nvim-nio",
         "williamboman/mason.nvim",
-        "jay-bubu/mason-nvim-dap.nvim",
+        "jay-babu/mason-nvim-dap.nvim",
     },
 
     config = function()
