@@ -298,9 +298,7 @@ local function setup_jdtls()
     }
 
     -- Start the JDTLS server
-    print("Attempting to start JDTLS")
     require('jdtls').start_or_attach(config)
-    print("Started JDTLS")
 end
 
 return {
