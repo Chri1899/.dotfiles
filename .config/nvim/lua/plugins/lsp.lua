@@ -5,7 +5,12 @@ local servers = {
     "cssls",
     "pyright",
     "jsonls",
-    "bashls"
+    "bashls",
+    "clangd",
+}
+
+local tools = {
+    "clang-format",
 }
 
 return {
@@ -28,6 +33,14 @@ return {
         config = function()
             require("mason-nvim-dap").setup({
                 ensure_installed = {"java-debug-adapter", "java-test" }
+            })
+        end
+    },
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        config = function()
+            require("mason-tool-installer").setup({
+                    ensure_installed = tools,
             })
         end
     },

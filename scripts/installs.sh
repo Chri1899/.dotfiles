@@ -8,20 +8,22 @@ declare -a packages=(
 	gcc
 	make
 	cmake
-    	libtool-bin
+    libtool-bin
 	bzip2
 	curl
 	zsh
-    	nodejs
-    	npm
+    nodejs
+    npm
 	neovim
 	python3
+    python3.12-venv
 	openjdk-17-jdk
+    openjdk-21-jdk
 	gradle
    	maven
 	fzf
-    	ripgrep
-    	gh
+    ripgrep
+    gh
 	tmux
 )
 
