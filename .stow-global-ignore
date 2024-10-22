@@ -15,3 +15,8 @@
 \.config/nvim/.luarc.json
 
 \.config/tmux/plugins
+
+\.config/scripts/git_setup.sh
+\.config/scripts/fonts.sh
+\.config/scripts/installs.sh
+
