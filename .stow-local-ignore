@@ -19,3 +19,5 @@
 \.config/scripts/fonts.sh
 \.config/scripts/installs.sh
 
+\.backup-nvim
+
