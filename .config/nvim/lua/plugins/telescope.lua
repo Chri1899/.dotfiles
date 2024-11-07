@@ -39,7 +39,6 @@ return {
 
         pcall(require("telescope").load_extension, "ui-select")
 
-        
         vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind files" })
         vim.keymap.set("n", "<leader>fg", builtin.git_files, { desc = "[F]ind [G]it Files" })
         vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })

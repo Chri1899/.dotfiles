@@ -12,7 +12,8 @@ return {
             { "<leader>d", group = "Debug" },
             { "<leader>t", group = "Trouble" },
             { "<leader>S", group = "Save" },
-            { "<leader>g", group = "Git" }
+            { "<leader>g", group = "Git" },
+            { "<leader>l", group = "Lsp" },
         })
     end
 }
