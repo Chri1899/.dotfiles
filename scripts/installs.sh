@@ -26,6 +26,7 @@ declare -a packages=(
     ripgrep
     gh
 	tmux
+    python3-pip
 )
 
 # If not on WSL
@@ -68,3 +69,11 @@ for package in "${packages[@]}"; do
 done
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# Install stable nvim branch
+git clone https://github.com/neovim/neovim.git
+
+cd neovim
+git checkout stable
+make CMAKE_BUILD_TYPE=Release
+sudo make install

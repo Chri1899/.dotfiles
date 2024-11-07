@@ -5,3 +5,7 @@ alias cls="clear"
 alias emacs="emacs &"
 alias repo="bash $HOME/scripts/gitcreaterepo.sh"
 alias fixhist="bash fix_zsh_hist.sh" 
+alias mvgen='f()
+    bash $HOME/scripts/maven_create_project.sh $1 $2;f'
+alias cppgen='f()
+    bash $HOME/scripts/cpp_setup.sh $1;f'
