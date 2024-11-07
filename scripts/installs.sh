@@ -6,6 +6,7 @@ declare -a packages=(
 	stow
 	tar
 	gcc
+    clang
 	make
 	cmake
     libtool-bin
