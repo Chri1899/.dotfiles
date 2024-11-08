@@ -70,6 +70,10 @@ return {
             local cmp_lsp = require("cmp_nvim_lsp")
 
             local capabilities = cmp_lsp.default_capabilities()
+            capabilities.textDocument.foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+            }
 
             local on_attach = function(client, bufnr)
                 -- Mappings
