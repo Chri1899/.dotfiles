@@ -9,3 +9,6 @@ alias mvgen='f()
 alias cppgen='f()
     bash $HOME/scripts/cpp_setup.sh $1;f'
 alias repo="bash git_create_repo.sh"
+alias cpc="cmake -B cmake"
+alias cpb="cmake --build cmake"
+alias cprun='cmake/$(basename "$PWD")'
