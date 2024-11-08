@@ -1,11 +1,4 @@
 #!bin/bash
-
-repo="$1"
-vis="$2"
-
-echo "Creating a new directory"
-mkdir ./$repo
-cd $repo
 git init
 
 echo "Creating README.md"

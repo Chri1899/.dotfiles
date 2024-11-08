@@ -17,23 +17,26 @@ EOF
 
 touch CMakeLists.txt
 cat >> CMakeLists.txt << EOF 
-# TODO 1 Set the minimum cmake version
+# Set the minimum cmake version
 cmake_minimum_required(VERSION 3.10)
-# TODO 2 Create a project
+# Create a project
 cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME ProjectName)
-string(REPLACE " " "_" ProjectId ${ProjectName})
-project(${ProjectName})
+string(REPLACE " " "_" ProjectId \${ProjectName})
+project(\${ProjectName})
 
 # For command_compile.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Set the SRC path
 file(GLOB_RECURSE sources
-    "${CMAKE_SOURCE_DIR}/src/*.c"
-    "${CMAKE_SOURCE_DIR}/src/*.cpp"
+    "\${CMAKE_SOURCE_DIR}/src/*.c"
+    "\${CMAKE_SOURCE_DIR}/src/*.cpp"
 )
 
-
-# TODO 3 Add an executable called Tutorial to the project
-add_executable(${ProjectName} ${sources})
+# Add an executable called Tutorial to the project
+add_executable(\${ProjectName} \${sources})
 EOF
+
+# create simple main.cpp file
+cd src
+touch main.cpp
