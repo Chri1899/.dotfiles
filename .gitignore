@@ -1,0 +1,16 @@
+.env
+notes
+README.md
+
+.emacs.d/eln-cache
+.emacs.d/.local
+.emacs.d/transient
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/recentf
+.emacs.d/auto-save-list
+
+.config/nvim/lazy-lock.json
+.config/nvim/.luarc.json
+.config/gh/
+
+.config/tmux/plugins

@@ -1,0 +1,17 @@
+\.git
+\.gitignore
+
+^/README.*
+^/LICENSE.*
+
+\.emacs.d/eln-cache
+\.emacs.d/.local
+\.emacs.d/projectile-bookmarks.eld
+\.emacs.d/recentf
+\.emacs.d/transient
+\.emacs.d/auto-save-list
+
+\.config/nvim/lazy-lock.json
+\.config/nvim/.luarc.json
+
+\.config/tmux/plugins
