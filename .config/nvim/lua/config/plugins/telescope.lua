@@ -37,19 +37,16 @@ return {
 
 			local builtin = require("telescope.builtin")
 
-			vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-			vim.keymap.set("n", "<leader>fd", builtin.find_files)
+			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "[F]ind [H]elp" })
+			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "[F]ind [F]iles " })
 			vim.keymap.set("n", "<leader>fn", function()
 				builtin.find_files({
 					cwd = vim.fn.stdpath("config"),
 				})
-			end)
-
-			vim.keymap.set("n", "<leader>fT", "<cmd>Telescope colorscheme<CR>")
-
-			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
-
-			vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find Todos" })
+			end, { desc = "[F]ind [N]eoVim Config" })
+			vim.keymap.set("n", "<leader>fC", "<cmd>Telescope colorscheme<CR>", { desc = "[F]ind [C]olorschemes" })
+			vim.keymap.set("n", "<leader>bf", builtin.current_buffer_fuzzy_find, { desc = "[B]uffer [F]uzzy Find" })
+			vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "[F]ind [T]odos" })
 
 			require("config.telescope.multigrep").setup()
 		end,

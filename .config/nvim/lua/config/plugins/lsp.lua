@@ -28,19 +28,22 @@ return {
 	  -- on file open
 	  vim.api.nvim_create_autocmd("LspAttach", {
 		group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
-		callback = function(bufnr)
-		  local opts = { noremap = true }
+		callback = function()
+		  require("which-key").add(
+			{"<leader>c", group = "[C]ode" }
+		  )
+		  
 		  -- LSP Specific keymaps
-		  vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, opts)
-		  vim.keymap.set("n", "<leader>gr", builtin.lsp_references, opts)
-		  vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, opts)
-		  vim.keymap.set("n", "<leader>gT", vim.lsp.buf.type_definition, opts)
-		  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		  vim.keymap.set("n", "<leader>gd", builtin.lsp_definitions, { desc = "[G]oto [D]efinitions" })
+		  vim.keymap.set("n", "<leader>gr", builtin.lsp_references, { desc = "[G]oto [R]eferences" })
+		  vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "[G]oto [D]eclarations" })
+		  vim.keymap.set("n", "<leader>gT", vim.lsp.buf.type_definition, { desc = "[G]oto [T]ype Definition" })
+		  vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover" })
 
 		  -- Code Action
-		  vim.keymap.set("n", "<leader>br", vim.lsp.buf.rename, opts)
-		  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-		  vim.keymap.set("n", "<leader>gs", builtin.lsp_document_symbols, opts)
+		  vim.keymap.set("n", "<leader>br", vim.lsp.buf.rename, { desc = "[B]uffer [R]ename" })
+		  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
+		  vim.keymap.set("n", "<leader>gs", builtin.lsp_document_symbols, { desc = "[G]oto Document [S]ymbols" })
 		end
 	  })
 

@@ -67,4 +67,4 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 vim.api.nvim_create_user_command("Floatingterminal", toggle_terminal, {})
-vim.keymap.set({"n", "t"}, "<space>tt", toggle_terminal)
+vim.keymap.set({"n", "t"}, "<space>tt", toggle_terminal, { desc = "[T]oggle [T]erminal" })
