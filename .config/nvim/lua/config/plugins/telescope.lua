@@ -17,6 +17,9 @@ return {
 					find_files = {
 						theme = "dropdown",
 					},
+					colorscheme = {
+						enable_preview = true,
+					},
 				},
 				extensions = {
 					wrap_results = true,
@@ -41,6 +44,8 @@ return {
 					cwd = vim.fn.stdpath("config"),
 				})
 			end)
+
+			vim.keymap.set("n", "<leader>fT", "<cmd>Telescope colorscheme<CR>")
 
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 
