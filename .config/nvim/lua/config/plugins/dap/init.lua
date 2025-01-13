@@ -23,8 +23,6 @@ return {
 			vim.keymap.set("n", "<F5>", dap.step_back)
 			vim.keymap.set("n", "<F8>", dap.restart)
 
-			require("plugins.dap.settings.cpptools")
-			require("plugins.dap.settings.java-debug")
 		end,
 	},
 }
