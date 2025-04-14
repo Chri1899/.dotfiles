@@ -9,6 +9,7 @@ declare -a packages=(
     clang
 	make
 	cmake
+	ninja-build
     libtool-bin
 	bzip2
 	curl
@@ -17,7 +18,7 @@ declare -a packages=(
     npm
 	neovim
 	python3
-    python3.12-venv
+    python3.10-venv
 	openjdk-17-jdk
     openjdk-21-jdk
 	gradle

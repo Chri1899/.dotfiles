@@ -65,6 +65,10 @@ return {
 			},
 		  },
 		},
+		html = {},
+		cssls = {},
+		tailwindcss = {},
+		eslint = {},
 	  }
 
 	  -- Ensure the defined tools are installed

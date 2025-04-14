@@ -68,3 +68,4 @@ export COLORTERM=truecolor
 
 # Source aliases
 source $HOME/.zsh_aliases
+export PATH=$HOME/.local/bin:$PATH
