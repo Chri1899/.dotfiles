@@ -12,3 +12,4 @@ alias repo="bash git_create_repo.sh"
 alias cpc="cmake -B cmake"
 alias cpb="cmake --build cmake"
 alias cprun='cmake/$(basename "$PWD")'
+alias gp="$HOME/scripts/gp.sh"
