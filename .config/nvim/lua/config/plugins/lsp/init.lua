@@ -69,6 +69,7 @@ return {
 		cssls = {},
 		tailwindcss = {},
 		eslint = {},
+		prettier = {},
 	  }
 
 	  -- Ensure the defined tools are installed
