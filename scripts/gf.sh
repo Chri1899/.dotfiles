@@ -26,5 +26,11 @@ git add .
 echo "Committing: '$commit_msg'"
 git commit -m "$commit_msg"
 
-echo "Pushing to current branch..."
-git push
+# Ask whether to push or not
+read -p "Do you want to push now? [y/n]: " should_push
+if [[ "$should_push" == "y" || "$should_push" == "Y" ]]; then
+	echo "Pushing to current branch..."
+	git push
+else
+	echo "Skipping push. You can push later with gp"
+fi
