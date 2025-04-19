@@ -3,7 +3,7 @@ return {
   build = ":TSUpdate",
 
   config = function()
-    require "nvim-treesitter.configs".setup {
+    require("nvim-treesitter.configs").setup {
       -- List of parser names or "all"
       ensure_installed = { "bash", "c", "cpp", "lua", "vim", "vimdoc", "java", "html", "javascript", "typescript", "markdown", "css", "json", "tsx" },
 
@@ -22,11 +22,7 @@ return {
         disbale = {},
 
         additional_vim_regex_highlighting = false,
-      },
-
-	  autotag = {
-		enable = true,
-	  },
+      }
     }
 
 	local parser_config = require"nvim-treesitter.parsers".get_parser_configs()

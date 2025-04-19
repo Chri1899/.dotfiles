@@ -66,7 +66,6 @@ return {
 		  },
 		},
 		html = {},
-		cssmodules_ls = {},
 		jsonls = {},
 		cssls = {},
 		tailwindcss = {},
