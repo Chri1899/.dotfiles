@@ -1,0 +1,54 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR --export FZF_DEFAULT_OPTS:\x20\x20\x2d\x2dcolor\x3dbg\x2b\x3a\x2339383f\x2cbg\x3a\x23131318\x2cspinner\x3a\x23eab9d1\x2chl\x3a\x23c3c0ff\x20\x20\x20\x2d\x2dcolor\x3dfg\x3a\x23e5e1e9\x2cheader\x3a\x23c3c0ff\x2cinfo\x3a\x23eab9d1\x2cpointer\x3a\x23e5e1e9\x20\x20\x20\x2d\x2dcolor\x3dmarker\x3a\x23ffb4ab\x2cfg\x2b\x3a\x23e5e1e9\x2cprompt\x3a\x23c3c0ff\x2chl\x2b\x3a\x23c3c0ff\x20\x20\x20\x2d\x2dcolor\x3dselected\x2dbg\x3a\x2339383f\x20\x20\x20\x2d\x2dheight\x2040\x25\x20\x2d\x2dlayout\x3dreverse\x20\x2d\x2dborder\x3drounded\x20\x2d\x2dinfo\x3dright\x20\x20\x20\x2d\x2dcolor\x3dlabel\x3a\x23c8c5d0\x20\x20\x20\x2d\x2dcolor\x3dborder\x3a\x2347464f\x20\x20\x20\x2d\x2dpointer\x3d\x27\x27\x20\x20\x20\x2d\x2dprompt\x3d\x27\u276f\x20\x27\x20\x20\x20\x2d\x2dmulti
+SETUVAR --export JAVA_HOME:/usr/lib/jvm/java\x2d21\x2dopenjdk
+SETUVAR --export --path PATH:/usr/lib/jvm/java\x2d21\x2dopenjdk/bin\x1e/home/solyshi/\x2elocal/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/bin\x1e/var/lib/snapd/snap/bin\x1e/usr/lib/jvm/default/bin\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl
+SETUVAR __done_min_cmd_duration:10000
+SETUVAR __done_notification_urgency_level:low
+SETUVAR __fish_initialized:3800
+SETUVAR _fisher_fishingline_2F_safe_2D_rm_files:\x7e/\x2elocal/share/fisher/functions/__safe\x2drm\x2epl\x1e\x7e/\x2elocal/share/fisher/functions/__shell\x2dsafe\x2drm\x2ebash\x1e\x7e/\x2elocal/share/fisher/functions/del\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/rm\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/safe\x2drm\x2efish
+SETUVAR _fisher_franciscolourenco_2F_done_files:\x7e/\x2elocal/share/fisher/conf\x2ed/done\x2efish
+SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:\x7e/\x2elocal/share/fisher/functions/_autopair_backspace\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_left\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_right\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_same\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_tab\x2efish\x1e\x7e/\x2elocal/share/fisher/conf\x2ed/autopair\x2efish
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2elocal/share/fisher/functions/fisher\x2efish\x1e\x7e/\x2elocal/share/fisher/completions/fisher\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/autopair\x2efish\x1efishingline/safe\x2drm\x1efranciscolourenco/done
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fish_color_autosuggestion:928f9a
+SETUVAR fish_color_cancel:ffb4ab
+SETUVAR fish_color_command:c3c0ff
+SETUVAR fish_color_comment:928f9a
+SETUVAR fish_color_cwd:434078
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:c7c4dd
+SETUVAR fish_color_error:ffb4ab
+SETUVAR fish_color_escape:2f1123
+SETUVAR fish_color_gray:39383f
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:603b4f
+SETUVAR fish_color_host_remote:c7c4dd
+SETUVAR fish_color_keyword:ffd8ea
+SETUVAR fish_color_normal:e5e1e9
+SETUVAR fish_color_operator:ffd8ea
+SETUVAR fish_color_option:c3c0ff
+SETUVAR fish_color_param:eab9d1
+SETUVAR fish_color_quote:c7c4dd
+SETUVAR fish_color_redirection:eab9d1
+SETUVAR fish_color_search_match:\x2d\x2dbackground\x3d313036
+SETUVAR fish_color_selection:\x2d\x2dbackground\x3d313036
+SETUVAR fish_color_status:ffb4ab
+SETUVAR fish_color_user:464559
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_pager_color_background:\x1d
+SETUVAR fish_pager_color_completion:c3c0ff
+SETUVAR fish_pager_color_description:c8c5d0
+SETUVAR fish_pager_color_prefix:eab9d1
+SETUVAR fish_pager_color_progress:c3c0ff
+SETUVAR fish_pager_color_secondary_background:\x1d
+SETUVAR fish_pager_color_secondary_completion:\x1d
+SETUVAR fish_pager_color_secondary_description:\x1d
+SETUVAR fish_pager_color_secondary_prefix:\x1d
+SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dc7c4dd
+SETUVAR fish_pager_color_selected_completion:2f2e42
+SETUVAR fish_pager_color_selected_description:2f2e42
+SETUVAR fish_pager_color_selected_prefix:472639
+SETUVAR fish_user_paths:/home/solyshi/\x2elocal/bin
