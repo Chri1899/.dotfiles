@@ -12,6 +12,7 @@ return {
 		-- If you use nix, you can build from source using latest nightly rust with:
 		-- build = 'nix run .#build-plugin',
 		init = function()
+			vim.g.toggle_cmp = true
 			require("luasnip").filetype_extend("javascriptreact", { "html" })
 			require("luasnip").filetype_extend("typescriptreact", { "html" })
 			require("luasnip").filetype_extend("svelte", { "html" })
@@ -42,7 +43,7 @@ return {
 		opts = {
 			-- Use this solution for now.
 			enabled = function()
-				return not vim.tbl_contains({ "DressingInput", "sagarename" }, vim.bo.filetype) and vim.g.toggle_blink
+				return not vim.tbl_contains({ "DressingInput", "sagarename" }, vim.bo.filetype) and vim.g.toggle_cmp
 			end,
 			cmdline = {
 				completion = {

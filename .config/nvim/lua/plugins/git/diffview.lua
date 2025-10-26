@@ -13,7 +13,7 @@ return {
 		local wk = require("which-key")
 		wk.add({
 			{
-				"<leader>td",
+				"<leader>gd",
 				function()
 					if next(require("diffview.lib").views) == nil then
 						vim.cmd("DiffviewOpen")

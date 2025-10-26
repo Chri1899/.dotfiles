@@ -1,6 +1,6 @@
 return {
 	"Civitasv/cmake-tools.nvim",
-	ft = { "cmake" },
+	ft = { "cmake", "cxx", "c", "cpp" },
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 		require("cmake-tools").setup({
@@ -23,6 +23,7 @@ return {
 			{ "<leader>Cc", "<cmd>CMakeClean<CR>", desc = "Clean Project" },
 			{ "<leader>Cb", "<cmd>CMakeBuild<CR>", desc = "Build Project" },
 			{ "<leader>Cg", "<cmd>CmakeGenerate<CR>", desc = "Generate Project" },
+			{ "<leader>Cr", "<cmd>CMakeRun<cr>", desc = "Run Project" },
 		})
 	end,
 }

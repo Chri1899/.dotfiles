@@ -10,7 +10,8 @@ SETUVAR _fisher_fishingline_2F_safe_2D_rm_files:\x7e/\x2elocal/share/fisher/func
 SETUVAR _fisher_franciscolourenco_2F_done_files:\x7e/\x2elocal/share/fisher/conf\x2ed/done\x2efish
 SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:\x7e/\x2elocal/share/fisher/functions/_autopair_backspace\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_left\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_right\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_insert_same\x2efish\x1e\x7e/\x2elocal/share/fisher/functions/_autopair_tab\x2efish\x1e\x7e/\x2elocal/share/fisher/conf\x2ed/autopair\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2elocal/share/fisher/functions/fisher\x2efish\x1e\x7e/\x2elocal/share/fisher/completions/fisher\x2efish
-SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/autopair\x2efish\x1efishingline/safe\x2drm\x1efranciscolourenco/done
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/autopair\x2efish\x1efishingline/safe\x2drm\x1efranciscolourenco/done\x1ereitzig/sdkman\x2dfor\x2dfish\x40v2\x2e1\x2e0
+SETUVAR _fisher_reitzig_2F_sdkman_2D_for_2D_fish_40_v2_2E_31_2E_30__files:\x7e/\x2elocal/share/fisher/functions/sdk\x2efish\x1e\x7e/\x2elocal/share/fisher/conf\x2ed/sdk\x2efish\x1e\x7e/\x2elocal/share/fisher/completions/sdk\x2efish
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_color_autosuggestion:928f9a
 SETUVAR fish_color_cancel:ffb4ab
@@ -51,4 +52,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dc7c4dd
 SETUVAR fish_pager_color_selected_completion:2f2e42
 SETUVAR fish_pager_color_selected_description:2f2e42
 SETUVAR fish_pager_color_selected_prefix:472639
-SETUVAR fish_user_paths:/home/solyshi/\x2elocal/bin
+SETUVAR fish_user_paths:/home/solyshi/\x2elocal/share/npm/bin\x1e/home/solyshi/\x2elocal/bin

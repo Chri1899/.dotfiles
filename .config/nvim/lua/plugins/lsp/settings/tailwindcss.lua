@@ -1,21 +1,31 @@
 return {
-	settings = {
-		tailwindCSS = {
-			classAttributes = { "class", "className", "ngClass" },
-			experimental = {
-				classRegex = {
-					"tw`([^`]*)", -- tw`...`
-					"tw='([^']*)", -- <div tw="..." />
-					"tw={`([^`}]*)", -- <div tw={"..."} />
-					"tw\\.\\w+`([^`]*)", -- tw.xxx`...`
-					"tw\\(.*?\\)`([^`]*)", -- tw(component)`...`
-					"styled\\(.*?, '([^']*)'\\)",
-					{ "cn\\(([^)]*)\\)", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)" },
-					{ "clsx\\(([^]*)\\)", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)" },
-					{ "(?:twMerge|twJoin)\\(([^\\);]*)[\\);]", "[`'\"`]([^'\"`,;]*)[`'\"`]" },
-					{ "{([\\s\\S]*)}", ":\\s*['\"`]([^'\"`]*)['\"`]" },
-				},
-			},
+	filetypes = {
+		"html",
+		"css",
+		"scss",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"svelte",
+		"mdx",
+	},
+	root_dir = require("lspconfig.util").root_pattern(
+		"tailwind.config.js",
+		"tailwind.config.ts",
+		"tailwind.config.cjs",
+		"package.json"
+	),
+	init_options = {
+		userLanguages = {
+			html = "html",
+			css = "css",
+			scss = "css",
+			javascript = "javascript",
+			javascriptreact = "javascriptreact",
+			typescript = "typescript",
+			typescriptreact = "typescriptreact",
 		},
 	},
 }

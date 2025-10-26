@@ -1,0 +1,19 @@
+name: samvanced
+root: ~/Documents/Projects/samvanced
+windows:
+  - app:
+      layout: main-vertical
+      panes:
+        - pnpm dev:app
+        - flutter logs
+        - nvim
+  - backend:
+      layout: main-vertical
+      panes:
+        - pnpm dev:backend
+        - docker-compose logs -f backend
+  - infra:
+      layout: main-vertical
+      panes:
+        - docker-compose up -d
+        - docker-compose logs -f

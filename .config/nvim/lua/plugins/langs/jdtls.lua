@@ -1,6 +1,5 @@
--- NOTE: For Java
 return {
-  "mfussenegger/nvim-jdtls",
-  ft = "java",
-  enabled = false,
+	"mfussenegger/nvim-jdtls",
+	ft = "java",
+	config = function() end,
 }

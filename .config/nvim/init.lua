@@ -30,6 +30,14 @@ local opts = {
 	},
 }
 
+if vim.fn.has("mac") == 1 then
+	vim.g.os = "Darwin"
+elseif vim.fn.has("unix") == 1 then
+	vim.g.os = "Linux"
+elseif vim.fn.has("win32") == 1 then
+	vim.g.os = "Windows"
+end
+
 -- Load the options from the config/options.lua file
 require("config.options")
 -- Load the keymaps from the config/keymaps.lua file

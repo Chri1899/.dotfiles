@@ -1,160 +1,209 @@
-local status_ok, jdtls = pcall(require, "jdtls")
-if not status_ok then
+-- Java Setup with auto SDK detection, which-key, and LWJGL/GLFW static imports
+local jdtls_ok, jdtls = pcall(require, "jdtls")
+if not jdtls_ok then
+	vim.notify("JDTLS not found, install with `:LspInstall jdtls`")
 	return
 end
 
-local bufnr = vim.api.nvim_get_current_buf()
+local which_key_ok, which_key = pcall(require, "which-key")
+if not which_key_ok then
+	vim.notify("which-key not found")
+	return
+end
+
+-- Import default LSP opts
+local lsp_opts_ok, lsp_opts = pcall(require, "plugins.lsp.opts")
+if not lsp_opts_ok then
+	vim.notify("Failed to load lsp.opts")
+	return
+end
+
+local jdtls_dir = vim.fn.stdpath("data") .. "/mason/share/jdtls"
+local config_dir = vim.fn.stdpath("data") .. "/mason/packages/jdtls/config_linux"
+
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-local WORKSPACE_PATH = vim.fn.stdpath("data") .. "/workspace/"
-local workspace_dir = WORKSPACE_PATH .. project_name
+local workspace_dir = vim.fn.stdpath("data") .. "/site/java/workspace-root/" .. project_name
+os.execute("mkdir -p " .. workspace_dir)
 
--- Prevent double start
-for _, client in ipairs(vim.lsp.get_active_clients({ name = "jdtls" })) do
-	if client then
-		return
+-- Debug & test bundles
+local bundles = {
+	vim.fn.glob(vim.fn.stdpath("data") .. "/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
+}
+vim.list_extend(bundles, vim.split(vim.fn.glob(vim.fn.stdpath("data") .. "/mason/share/java-test/*.jar", 1), "\n"))
+
+-- Extended client capabilities
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
+-- Auto-detect JDK
+local function detect_java_cmd()
+	if vim.fn.executable("./gradlew") == 1 then
+		local gradle_java = vim.fn.systemlist('./gradlew -q javaToolchains | grep "JDK"')[1]
+		if gradle_java and gradle_java ~= "" then
+			return gradle_java
+		end
 	end
-end
 
--- Paths for Mason-installed tools
-local mason_data = vim.fn.stdpath("data") .. "/mason/packages/"
-local java_debug_path = mason_data .. "java-debug-adapter/"
-local java_test_path = mason_data .. "java-test/"
-local jdtls_path = mason_data .. "jdtls/"
-local lombok_path = mason_data .. "lombok-nightly/"
-
--- Cached bundles (debug/test jars)
-local function cached_bundles()
-	if vim.g._java_bundles then
-		return vim.g._java_bundles
+	if vim.fn.executable("./mvnw") == 1 then
+		local mvn_java = vim.fn.systemlist('./mvnw -v | grep "Java home" | awk -F ": " \'{print $2}\'')[1]
+		if mvn_java and mvn_java ~= "" then
+			return mvn_java .. "/bin/java"
+		end
 	end
-	local b =
-		vim.split(vim.fn.glob(java_debug_path .. "extension/server/com.microsoft.java.debug.plugin-*.jar", true), "\n")
-	vim.list_extend(b, vim.split(vim.fn.glob(java_test_path .. "extension/server/*.jar", true), "\n"))
-	vim.g._java_bundles = b
-	return b
+
+	if os.getenv("JAVA_HOME") then
+		return os.getenv("JAVA_HOME") .. "/bin/java"
+	end
+
+	return "java"
 end
 
-local bundles = cached_bundles()
+local java_cmd = detect_java_cmd()
 
--- Determine OS
-local OS_NAME
-if vim.g.os == "Darwin" then
-	OS_NAME = "mac"
-elseif vim.g.os == "Linux" then
-	OS_NAME = "linux"
-elseif vim.g.os == "Windows" then
-	OS_NAME = "win"
-else
-	vim.notify("Unsupported OS", vim.log.levels.WARN, { title = "Jdtls" })
+-- Lombok auto-detection
+local function find_lombok()
+	local paths = {
+		vim.fn.stdpath("data") .. "/mason/share/jdtls/lombok.jar",
+		vim.fn.stdpath("data") .. "/mason/packages/lombok-nightly/lombok.jar",
+	}
+
+	for _, path in ipairs(paths) do
+		if vim.fn.filereadable(path) == 1 then
+			return path
+		end
+	end
+	vim.notify("⚠️ Lombok jar not found", vim.log.levels.WARN)
+	return nil
 end
 
--- Root markers
-local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
+local lombok_path = find_lombok()
 
--- Main config
+-- JDTLS launcher detection
+local function find_launcher()
+	local candidates = {
+		jdtls_dir .. "/plugins/org.eclipse.equinox.launcher.jar",
+		jdtls_dir .. "/plugins/org.eclipse.equinox.launcher_*.jar",
+		vim.fn.stdpath("data") .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher.jar",
+		vim.fn.stdpath("data") .. "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar",
+	}
+
+	for _, path in ipairs(candidates) do
+		local found = vim.fn.glob(path, true)
+		if found ~= "" then
+			return found
+		end
+	end
+
+	vim.notify("❌ Could not locate org.eclipse.equinox.launcher*.jar", vim.log.levels.ERROR)
+	return nil
+end
+
+local launcher_path = find_launcher()
+if not launcher_path then
+	return
+end
+
+-- Build cmd
+local cmd = {
+	java_cmd,
+	"-Declipse.application=org.eclipse.jdt.ls.core.id1",
+	"-Dosgi.bundles.defaultStartLevel=4",
+	"-Declipse.product=org.eclipse.jdt.ls.core.product",
+	"-Dlog.protocol=true",
+	"-Dlog.level=ALL",
+	"-Xmx1g",
+	"--add-modules=ALL-SYSTEM",
+	"--add-opens",
+	"java.base/java.util=ALL-UNNAMED",
+	"--add-opens",
+	"java.base/java.lang=ALL-UNNAMED",
+	"-jar",
+	launcher_path,
+	"-configuration",
+	config_dir,
+	"-data",
+	workspace_dir,
+}
+
+if lombok_path then
+	table.insert(cmd, 6, "-javaagent:" .. lombok_path)
+end
+
+-- Config
 local config = {
-	cmd = {
-		"java",
-		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
-		"-Dosgi.bundles.defaultStartLevel=4",
-		"-Declipse.product=org.eclipse.jdt.ls.core.product",
-		"-Dlog.protocol=true",
-		"-Dlog.level=ALL",
-		"-javaagent:" .. lombok_path .. "lombok.jar",
-		"-Xms512m",
-		"-Xmx2G",
-		"--add-modules=ALL-SYSTEM",
-		"--add-opens",
-		"java.base/java.util=ALL-UNNAMED",
-		"--add-opens",
-		"java.base/java.lang=ALL-UNNAMED",
-		"-jar",
-		jdtls_path .. "plugins/org.eclipse.equinox.launcher.jar",
-		"-configuration",
-		jdtls_path .. "config_" .. OS_NAME,
-		"-data",
-		workspace_dir,
-	},
-	root_dir = require("jdtls.setup").find_root(root_markers),
-	on_attach = require("plugins.lsp.opts").on_attach,
-	capabilities = require("plugins.lsp.opts").capabilities,
-	init_options = { bundles = bundles },
-
+	cmd = cmd,
+	root_dir = require("jdtls.setup").find_root({ ".project", ".git", "mvnw", "pom.xml", "build.gradle" }),
 	settings = {
 		java = {
-			completion = {
-				favoriteStaticMembers = {
-					"org.lwjgl.glfw.Callbacks.*",
-					"org.lwjgl.glfw.GLFW.*",
-					"org.lwjgl.opengl.GL11.*",
-					"org.lwjgl.opengl.GL15.*",
-					"org.lwjgl.opengl.GL20.*",
-					"org.lwjgl.opengl.GL30.*",
-					"org.lwjgl.system.MemoryStack.*",
-					"org.lwjgl.system.MemoryUtil.*",
-				},
-			},
 			eclipse = { downloadSources = true },
 			maven = { downloadSources = true },
-			sources = {
-				organizeImports = { starThreshold = 9999, staticStarThreshold = 9999 },
-			},
-			project = {
-				referencedLibraries = {}, -- initially empty
-				ignoredResources = {
-					"**/target/**",
-					"**/build/**",
-					"**/.gradle/**",
-					"**/out/**",
+			implementationsCodeLens = { enabled = true },
+			referencesCodeLens = { enabled = true },
+			references = { enabled = true },
+			signatureHelp = { enabled = true },
+
+			project = { outputPath = "bin", sourcesPaths = { "src", "test" } },
+			configuration = { updateBuildConfiguration = "interactive" },
+
+			format = {
+				enabled = true,
+				comments = true,
+				settings = {
+					url = vim.fn.stdpath("config") .. "/utils/eclipse-java-google-style.xml",
+					profile = "GoogleStyle",
 				},
 			},
-			signatureHelp = { enabled = true },
-			extendedClientCapabilities = require("jdtls").extendedClientCapabilities,
-			import = { gradle = { enabled = false }, maven = { enabled = false } },
-			autobuild = { enabled = false },
+		},
+
+		completion = {
+			favoriteStaticMembers = {
+				-- LWJGL / GLFW
+				"org.lwjgl.glfw.*",
+				"org.lwjgl.glfw.GLFW.*",
+				"org.lwjgl.opengl.GL.*",
+				"org.lwjgl.system.MemoryUtil.*",
+				"org.lwjgl.opengl.GL11.*",
+				"org.lwjgl.opengl.GL13.*",
+				"org.lwjgl.opengl.GL20.*",
+				"org.lwjgl.glfw.Callbacks.*",
+				"org.lwjgl.system.MemoryStack.*",
+			},
+			importOrder = { "java", "javax", "com", "org" },
+		},
+
+		extendedClientCapabilities = extendedClientCapabilities,
+		sources = { organizeImports = { starThreshold = 9999, staticStarThreshold = 9999 } },
+		import = { gradle = { enabled = true }, maven = { enabled = true } },
+		codeGeneration = {
+			toString = { template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}" },
+			useBlocks = true,
 		},
 	},
 
 	flags = { allow_incremental_sync = true },
+	capabilities = lsp_opts.capabilities,
+	on_attach = lsp_opts.on_attach,
+	init_options = { bundles = bundles },
 }
 
-local wk = require("which-key")
+-- On attach
+config.on_attach = function(client, bufnr)
+	-- DAP setup
+	require("jdtls").setup_dap({ hotcodereplace = "auto" })
+	local status_ok, jdtls_dap = pcall(require, "jdtls.dap")
+	if status_ok then
+		jdtls_dap.setup_dap_main_class_configs()
+	end
 
-wk.add({
-	-- Keymaps
-	{ "<leader>ji", ":lua require'jdtls'.organize_imports()<cr>", desc = "Organize Imports" },
-	{ "<leader>jv", ":lua require'jdtls'.extract_variable()<cr>", desc = "Extract Variable" },
-	{ "<leader>jc", ":lua require'jdtls'.extract_constant()<cr>", desc = "Extract Constant" },
-	{ "<leader>jm", "<Esc>:lua require'jdtls'.extract_method(true)<cr>", desc = "Extract Method" },
-})
+	-- which-key mappings under <leader>J
+	local wk = require("which-key")
+	wk.add({
+		{ "<leader>Ji", ":lua require'jdtls'.organize_imports()<CR>", desc = "Organize Imports" },
+		{ "<leader>Jv", ":lua require'jdtls'.extract_variable()<CR>", desc = "Extract Variable" },
+		{ "<leader>Jc", ":lua require'jdtls'.extract_constant()<CR>", desc = "Extract Constant" },
+		{ "<leader>Jm", ":lua require'jdtls'.extract_method(true)<CR>", desc = "Extract Method" },
+	})
+end
 
--- Commands
-vim.cmd([[
-command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>)
-command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>)
-command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config()
-command! -buffer JdtJol lua require('jdtls').jol()
-command! -buffer JdtBytecode lua require('jdtls').javap()
-command! -buffer JdtJshell lua require('jdtls').jshell()
-command! -buffer JavaTestCurrentClass lua require('jdtls').test_class()
-command! -buffer JavaTestNearestMethod lua require('jdtls').test_nearest_method()
-]])
-
--- Start or attach JDTLS immediately
+-- Start or attach
 jdtls.start_or_attach(config)
-
--- Async LWJGL jar loading (1 second after attach)
-vim.defer_fn(function()
-	local lwjgl_folder = vim.fn.getcwd() .. "/libs/lwjgl"
-	local jars = {}
-	if vim.fn.isdirectory(lwjgl_folder) ~= 0 then
-		jars = vim.split(vim.fn.glob(lwjgl_folder .. "/*.jar", true), "\n")
-	end
-
-	if #jars > 0 then
-		-- Send configuration change to JDTLS
-		vim.lsp.buf_request(0, "workspace/didChangeConfiguration", {
-			settings = { java = { project = { referencedLibraries = jars } } },
-		})
-	end
-end, 1000)

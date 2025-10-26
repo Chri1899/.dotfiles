@@ -158,8 +158,7 @@ return {
 				})
 			end,
 			desc = "NEWS",
-		},
-		-- SEARCH
+		}, -- SEARCH
 		{
 			"<leader>sc",
 			function()

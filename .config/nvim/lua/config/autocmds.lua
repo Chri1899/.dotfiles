@@ -25,9 +25,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 		-- 3️⃣ Nur starten, wenn kein Buffer offen oder leerer Start
 		if vim.fn.argc() == 0 or is_directory then
-			-- Schließe eventuell offenen Buffer
-			vim.cmd("enew")
-
 			-- Snacks Dashboard starten
 			require("snacks.dashboard").open()
 		end
